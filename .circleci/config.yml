@@ -16,3 +16,4 @@ workflows:
       - maven/test:
           name: test
           executor: openjdk17
+          command: '-e verify sonar:sonar'
