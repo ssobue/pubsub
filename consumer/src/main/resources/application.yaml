@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: consumer
+  main:
+    banner-mode: off
+  profiles:
+    active: dev

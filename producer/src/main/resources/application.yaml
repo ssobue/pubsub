@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: producer
+  main:
+    banner-mode: off
+  profiles:
+    active: dev
