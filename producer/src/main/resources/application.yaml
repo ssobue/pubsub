@@ -5,3 +5,18 @@ spring:
     banner-mode: off
   profiles:
     active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - prometheus
+
+logging:
+  level:
+    root: info
+    org.apache.tomcat: warn
+    org.apache.catalina: warn
+    org.springframework: warn
