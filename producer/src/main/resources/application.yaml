@@ -5,6 +5,12 @@ spring:
     banner-mode: off
   profiles:
     active: dev
+  cloud:
+    stream:
+      bindings:
+        output-out-0:
+          destination: sample
+          content-type: text/plain
 
 management:
   endpoints:
