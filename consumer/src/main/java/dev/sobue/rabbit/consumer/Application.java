@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
 
+import static java.util.Objects.requireNonNull;
+
 @Slf4j
 @RequiredArgsConstructor
 @SpringBootApplication
@@ -18,15 +20,18 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
+	private static final String BAGGAGE_TAG_NAME = "sample-msg-process-time-millis";
+
 	private final BraveTracer tracer;
 
 	@Bean
 	public Consumer<Message<String>> input() {
 		return m -> {
-			var baggage = tracer.getBaggage("sample-msg-process-time-millis");
-			var t = System.currentTimeMillis() - Long.parseLong(baggage.get());
+			var baggage = tracer.getBaggage(BAGGAGE_TAG_NAME);
+			var time = System.currentTimeMillis();
+			var duration = time - Long.parseLong(requireNonNull(requireNonNull(baggage).get()));
 
-			log.info("d:{} i:{}", t, m);
+			log.info("received. time:{} duration:{} payload:{}", time, duration, m.getPayload());
 		};
 	}
 }
