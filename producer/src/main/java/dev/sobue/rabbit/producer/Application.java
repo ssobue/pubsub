@@ -1,5 +1,6 @@
 package dev.sobue.rabbit.producer;
 
+import io.micrometer.tracing.brave.bridge.BraveTracer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,8 +24,13 @@ public class Application {
 
 	private final StreamBridge streamBridge;
 
+	private final BraveTracer tracer;
+
 	@PostMapping("/post-message")
 	public ResponseEntity<Void> postMessage(@RequestBody(required = false) String body) {
+		var baggage = tracer.getBaggage("sample-msg-process-time-millis");
+		baggage.set(String.valueOf(System.currentTimeMillis()));
+
 		streamBridge.send(
 				"output-out-0",
 				MessageBuilder.withPayload(hasLength(body) ? body : "a").build());
