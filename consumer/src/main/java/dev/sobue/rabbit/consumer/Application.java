@@ -1,5 +1,7 @@
 package dev.sobue.rabbit.consumer;
 
+import static java.util.Objects.requireNonNull;
+
 import io.micrometer.tracing.brave.bridge.BraveTracer;
 import java.util.function.Consumer;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
-
-import static java.util.Objects.requireNonNull;
 
 @Slf4j
 @RequiredArgsConstructor
